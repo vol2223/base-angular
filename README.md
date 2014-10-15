@@ -7,7 +7,11 @@ use the library [Angularjs](https://angularjs.org/) + [typeScript](http://www.ty
 
 ### Quick build
 ```sh
+$ git submodule init
+$ git submodule update
+
 $ brew install node
+
 $ npm install coffee-script -g
 $ npm install coffee-script
 
