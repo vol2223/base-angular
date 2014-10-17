@@ -1,7 +1,9 @@
 /// <reference path="../../DefinitelyTyped/angularjs/angular.d.ts" />
 import angular = require('angular');
-import example = require('./example');
-angular.module('exampleProject', [])
-  .service('example', example)
+import controllerModule = require('modules/controllerModule');
+
+angular.module('exampleProject', [
+      controllerModule.name
+  ])
 
 angular.bootstrap(document, ['exampleProject']);
