@@ -3,13 +3,13 @@ coffee     = require('gulp-coffee')
 ngmin      = require('gulp-ngmin')
 uglify     = require('gulp-uglify')
 init       = require('gulp-rimraf')
-bower      = require('bower')
 typescript = require('gulp-tsc')
 plumber    = require 'gulp-plumber'
 plugins    = require('gulp-load-plugins')(camelize: true)
 isWatching = false
 
-gulp.task 'bower', ->
+gulp.task 'bower', ['js'], ->
+  bower = require('bower')
   bower.commands.install().on 'end', (installed) ->
     gulp.src [
       'bower_components/bootstrap/dist/css/bootstrap.min.css'
@@ -28,7 +28,24 @@ gulp.task 'init', ->
   gulp.src 'build/'
   .pipe init()
 
-gulp.task "browserify", ["compile"], ->
+gulp.task "browserify", ["compile", "bower"], ->
+  browserify()
+
+gulp.task "watchBrowserify", ["compile"], ->
+  browserify()
+
+gulp.task "compile", ->
+  compile()
+
+gulp.task 'watch', ->
+  gulp.watch [
+    'src/ts/**/*.ts'
+  ], -> gulp.start 'watchBrowserify'
+
+gulp.task 'default', ['init'], ->
+  gulp.start 'browserify'
+
+browserify = ->
   browserify = require("browserify")
   source = require("vinyl-source-stream")
   browserify
@@ -38,7 +55,7 @@ gulp.task "browserify", ["compile"], ->
   .pipe source "app.js"
   .pipe gulp.dest "build/www/js/"
 
-gulp.task "compile", ->
+compile = ->
   notify    = require 'gulp-notify'
   gulp.src "src/ts/**/*.ts"
     .pipe plumber errorHandler: notify.onError('<%= error.message %>')
@@ -48,11 +65,3 @@ gulp.task "compile", ->
       noImplicitAny: true
       target: "ES5"
   .pipe gulp.dest("build/www/js")
-
-gulp.task 'watch', ->
-  gulp.watch [
-    'src/ts/**/*.ts'
-  ], -> gulp.start 'browserify'
-
-gulp.task 'default', ['init'], ->
-  gulp.start 'browserify', 'js', 'bower'
