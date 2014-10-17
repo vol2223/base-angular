@@ -3,9 +3,10 @@ use the library [Angularjs](https://angularjs.org/) + [typeScript](http://www.ty
 
 # Install
 
-## In the case of OSX
-
 ### Quick build
+
+**In the case of OSX**
+
 ```sh
 $ git submodule init
 $ git submodule update
@@ -23,7 +24,7 @@ $ gulp
 
 # Fill in the project information
 
-## Files include the following
+### Files include the following
  - ./bower.js
  - ./gulpfile.coffee
  - ./src/ts/bootstrap.ts
