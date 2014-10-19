@@ -1,4 +1,4 @@
 /build/
 /bower_components/
 /node_modules/
-/gulpfile.js.bak
+/.sass-cache/

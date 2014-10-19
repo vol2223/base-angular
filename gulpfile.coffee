@@ -1,10 +1,11 @@
-gulp       = require('gulp')
-coffee     = require('gulp-coffee')
-ngmin      = require('gulp-ngmin')
-uglify     = require('gulp-uglify')
-init       = require('gulp-rimraf')
-typescript = require('gulp-tsc')
+gulp       = require 'gulp'
+coffee     = require 'gulp-coffee'
+ngmin      = require 'gulp-ngmin'
+uglify     = require 'gulp-uglify'
+init       = require 'gulp-rimraf'
+typescript = require 'gulp-tsc'
 plumber    = require 'gulp-plumber'
+sass       = require 'gulp-ruby-sass'
 plugins    = require('gulp-load-plugins')(camelize: true)
 isWatching = false
 
@@ -28,14 +29,17 @@ gulp.task 'init', ->
   gulp.src 'build/'
   .pipe init()
 
-gulp.task "browserify", ["compile", "bower"], ->
+gulp.task "browserify", ["tsCompile", "bower", "sassCompile"], ->
   browserify()
 
-gulp.task "watchBrowserify", ["compile"], ->
+gulp.task "watchBrowserify", ["tsCompile", "sassCompile"], ->
   browserify()
 
-gulp.task "compile", ->
-  compile()
+gulp.task "tsCompile", ->
+  tsCompile()
+
+gulp.task "sassCompile", ->
+  sassCompile()
 
 gulp.task 'watch', ->
   gulp.watch [
@@ -55,7 +59,7 @@ browserify = ->
   .pipe source "app.js"
   .pipe gulp.dest "build/www/js/"
 
-compile = ->
+tsCompile = ->
   notify    = require 'gulp-notify'
   gulp.src "src/ts/**/*.ts"
     .pipe plumber errorHandler: notify.onError('<%= error.message %>')
@@ -65,3 +69,8 @@ compile = ->
       noImplicitAny: true
       target: "ES5"
   .pipe gulp.dest("build/www/js")
+
+sassCompile = ->
+  gulp.src 'src/scss/**/*.scss'
+    .pipe sass({style : 'expanded'})
+    .pipe gulp.dest('build/www/css');
