@@ -5,21 +5,8 @@ use the library [Angularjs](https://angularjs.org/) + [typeScript](http://www.ty
 
 ### Quick build
 
-**In the case of OSX**
-
 ```sh
-$ git submodule init
-$ git submodule update
-
-$ brew install node
-
-$ npm install coffee-script -g
-$ npm install coffee-script
-
-$ npm install gulp -g
-$ npm install gulp
-
-$ gulp
+$ make
 ```
 
 # Fill in the project information
@@ -28,3 +15,10 @@ $ gulp
  - ./bower.js
  - ./gulpfile.coffee
  - ./src/ts/bootstrap.ts
+
+### file to register the module
+ - ./src/ts/modules/controllerModule.ts
+ - ./src/ts/modules/serviceModule.ts
+ ・
+ ・
+ ・
