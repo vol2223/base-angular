@@ -1,5 +1,5 @@
 # Base Angularjs
-use the library [Angularjs](https://angularjs.org/) + [typeScript](http://www.typescriptlang.org/) + [browserify](http://browserify.org/) + [Sass](http://sass-lang.com/)
+use the library [Angularjs](https://angularjs.org/) + [typeScript](http://www.typescriptlang.org/) + [browserify](http://browserify.org/) + [Sass](http://sass-lang.com/) + [jade](http://jade-lang.com/)
 
 # Install
 
