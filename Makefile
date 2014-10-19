@@ -1,6 +1,7 @@
 .PHONY: install
 
 install:
+	gem install sass
 	git submodule init
 	git submodule update
 	npm install coffee-script -g
