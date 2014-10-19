@@ -6,10 +6,11 @@ init       = require 'gulp-rimraf'
 typescript = require 'gulp-tsc'
 plumber    = require 'gulp-plumber'
 sass       = require 'gulp-ruby-sass'
+jade       = require 'gulp-jade'
 plugins    = require('gulp-load-plugins')(camelize: true)
 isWatching = false
 
-gulp.task 'bower', ['js'], ->
+gulp.task 'bower', ->
   bower = require('bower')
   bower.commands.install().on 'end', (installed) ->
     gulp.src [
@@ -18,18 +19,16 @@ gulp.task 'bower', ['js'], ->
     ]
     .pipe gulp.dest './build/'
 
-gulp.task 'js', ->
-  gulp.src 'app.coffee'
-    .pipe coffee()
-    .pipe ngmin()
-    .pipe uglify()
-    .pipe gulp.dest 'build/'
+gulp.task 'jade', ->
+  gulp.src "src/jade/**/*.jade"
+    .pipe jade()
+    .pipe gulp.dest 'build/www/html/'
 
 gulp.task 'init', ->
   gulp.src 'build/'
   .pipe init()
 
-gulp.task "browserify", ["tsCompile", "bower", "sassCompile"], ->
+gulp.task "browserify", ["tsCompile", "bower", "sassCompile", "jade"], ->
   browserify()
 
 gulp.task "watchBrowserify", ["tsCompile", "sassCompile"], ->
@@ -44,6 +43,8 @@ gulp.task "sassCompile", ->
 gulp.task 'watch', ->
   gulp.watch [
     'src/ts/**/*.ts'
+    'src/jade/**/*.jade'
+    'src/sass/**/*.scss'
   ], -> gulp.start 'watchBrowserify'
 
 gulp.task 'default', ['init'], ->
